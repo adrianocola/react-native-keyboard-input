@@ -78,13 +78,17 @@ public class CustomKeyboardLayout implements ReactSoftKeyboardMonitor.Listener, 
         runOnUIThread(new Runnable() {
             @Override
             public void run() {
-                final View focusedView = getCurrentActivity().getCurrentFocus();
-                if (focusedView instanceof EditText) {
-                    showSoftKeyboard();
-                } else {
-                    hideCustomKeyboardContent();
-                    clearKeyboardOverlayMode();
+                final Activity activity = getCurrentActivity();
+                if (activity != null) {
+                    final View focusedView = activity.getCurrentFocus();
+                    if (focusedView instanceof EditText) {
+                        showSoftKeyboard();
+                    } else {
+                        hideCustomKeyboardContent();
+                        clearKeyboardOverlayMode();
+                    }
                 }
+                
                 promise.resolve(null);
             }
         });
